@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "sim.h"
+#include <stdio.h>
 
 int main(void)
 {
@@ -44,7 +45,8 @@ int main(void)
             if (IsMouseButtonDown(0))
             {
                 mousePos = GetMousePosition();
-                rodInst.angle = getAngleFromPos(mousePos, ZERO_HEIGHT, ZERO_WIDTH);
+                rodInst.angle = getAngleFromPos(mousePos);
+                printf("%f\n", sin(rodInst.angle));
                 rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
                 rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
             }

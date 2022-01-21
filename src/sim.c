@@ -1,13 +1,19 @@
 #include "sim.h"
 #include "raylib.h"
 #include "raymath.h"
+#include <math.h>
 
-float getAngleFromPos(Vector2 pos, int zeroHeight, int zeroWidth)
+float getAngleFromPos(Vector2 pos)
 {
-    float length = pos.y - zeroHeight;
-    float width = pos.x - zeroWidth;
-    float angle = atan(width / length);
+    float length = pos.y - ZERO_HEIGHT;
+    float width = pos.x - ZERO_WIDTH;
+    float angle = atan((width / length));
 
-    return angle;
+
+    if (fabsf(length) == length) {
+        return angle;
+    } else  {
+        return 3.14 + angle;
+    }
 }
 

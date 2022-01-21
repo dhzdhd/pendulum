@@ -25,8 +25,8 @@ static const int SCREEN_WIDTH = 1920;
 static const int SCREEN_HEIGHT = 1080;
 static const float GRAVITY = 9.8f;
 static const int ZERO_WIDTH = SCREEN_WIDTH / 2;
-static const int ZERO_HEIGHT = SCREEN_HEIGHT / 2 - 200;
+static const int ZERO_HEIGHT = SCREEN_HEIGHT / 2 ;
 
-float getAngleFromPos(Vector2, int, int);
+float getAngleFromPos(Vector2);
 
 #endif
