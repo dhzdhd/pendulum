@@ -11,14 +11,18 @@ int main(void)
         (Vector2){ZERO_WIDTH, ZERO_HEIGHT},
         (Vector2){ZERO_WIDTH, ZERO_HEIGHT + 400},
         0,
-        GREEN,
+        (Color){136, 192, 208, 255},
         400,
     };
 
     bool simulation = false;
     Vector2 mousePos;
-    float currentAngle;
-    float counter = 0.1;
+    float amplitude;
+    float counter = 0.1f;
+    float damper = 0.001f;
+
+    int pointNumber = 0;
+    Point pointList[10000];
 
     SetTargetFPS(60);
 
@@ -31,7 +35,7 @@ int main(void)
                 rodInst.end.x,
                 rodInst.end.y,
             },
-            GREEN,
+            (Color){136, 192, 208, 255},
             (Vector2) {0, 0},
             1.0f,
         };
@@ -53,25 +57,62 @@ int main(void)
                 rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
                 rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
             }
-            currentAngle = rodInst.angle;
-        }
+            amplitude = rodInst.angle;
+            counter = 0.1f;
 
-        if (simulation)
+            pointNumber = 0;
+        }
+        else
         {
             // Physics
-            rodInst.angle = currentAngle * cos(sqrt(GRAVITY / rodInst.length) * counter);
-            printf("%f", rodInst.angle);
+            rodInst.angle = amplitude * cos(sqrt(GRAVITY / rodInst.length) * counter);
+
+            if (amplitude > 0.0f)
+            {
+                amplitude -= damper;
+            }
+            else
+            {
+                amplitude = 0.0f;
+            }
+
+            printf("%f\n", amplitude);
             rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
             rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
-            counter += 0.1;
+            counter += 0.05f;
         }
 
         // Draw
         BeginDrawing();
 
-        ClearBackground(BLACK);
+        ClearBackground((Color){46, 52, 64, 255});
+        DrawFPS(0, 0);
         DrawLine(rodInst.start.x, rodInst.start.y, rodInst.end.x, rodInst.end.y, rodInst.color);
         DrawCircle(bobInst.position.x, bobInst.position.y, bobInst.radius, bobInst.color);
+
+        if (simulation)
+        {
+            pointList[pointNumber % POINT_LIMIT] = (Point){1, rodInst.end, 1.f};
+            pointNumber++;
+
+            for (int i = 0; i < POINT_LIMIT; i++)
+            {
+                DrawCircle(
+                        pointList[i].position.x,
+                        pointList[i].position.y,
+                        pointList[i].radius,
+                        ColorAlpha((Color) {218, 172, 209, 255}, pointList[i].opacity)
+                );
+                if(pointList[i].opacity != 0.0f)
+                {
+                    pointList[i].opacity -= 0.003f;
+                }
+            }
+
+            char buffer[100];
+            sprintf(buffer, "Particles: %d", pointNumber);
+            DrawText(buffer, SCREEN_WIDTH - 180, 0, 20, (Color) {218, 172, 209, 255});
+        }
 
         EndDrawing();
     }

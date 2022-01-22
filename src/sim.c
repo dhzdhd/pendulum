@@ -9,11 +9,10 @@ float getAngleFromPos(Vector2 pos)
     float width = pos.x - ZERO_WIDTH;
     float angle = atan((width / length));
 
-
     if (fabsf(length) == length) {
         return angle;
-    } else  {
-        return 3.14 + angle;
+    } else {
+        return PI + angle;
     }
 }
 
