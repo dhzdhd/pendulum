@@ -93,7 +93,7 @@ int main(void)
 
         if (simulation)
         {
-            pointList[pointNumber % POINT_LIMIT] = (Point){1, rodInst.end, 1.f};
+            pointList[pointNumber % POINT_LIMIT] = (Point){1.5, rodInst.end, 1.f};
             pointNumber++;
 
             for (int i = 0; i < POINT_LIMIT; i++)
