@@ -19,7 +19,7 @@ int main(void)
     Vector2 mousePos;
     float amplitude;
     float counter = 0.1f;
-    float damper = 0.001f;
+    float damper = 0.0f;
 
     int pointNumber = 0;
     Point pointList[10000];
@@ -76,7 +76,6 @@ int main(void)
                 amplitude = 0.0f;
             }
 
-            printf("%f\n", amplitude);
             rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
             rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
             counter += 0.05f;
