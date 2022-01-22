@@ -22,8 +22,8 @@ int main(void)
     Vector2 mousePos;
     float amplitude;
 
-    float counter = 0.1f;
-    float counterIncrement = 0.1f;
+    float time = 0.5f;
+    float timeIncrement = 0.1f;
 
     float damper = 0.0f;
 
@@ -79,7 +79,7 @@ int main(void)
                 rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
             }
             amplitude = rodInst.angle;
-            counter = 0.1f;
+            time = 0.1f;
 
             // Reset particle number after simulation is paused
             pointNumber = 0;
@@ -87,21 +87,12 @@ int main(void)
         else
         {
             // Physics
-            rodInst.angle = amplitude * cos(sqrt(GRAVITY / rodInst.length) * counter);
-
-            // Reduce amplitude according to damp value
-            if (amplitude > 0.0f)
-            {
-                amplitude -= damper;
-            }
-            else
-            {
-                amplitude = 0.0f;
-            }
+//            rodInst.angle = amplitude * cos(sqrt(GRAVITY / rodInst.length) * time);
+            rodInst.angle = amplitude * expf(-damper * time / 2) * sin(sqrtf(powf(GRAVITY / rodInst.length, 2) - (powf(damper, 2) / 4)) * time + amplitude);
 
             rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
             rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
-            counter += counterIncrement;
+            time += timeIncrement;
         }
 
         // Draw
@@ -153,13 +144,13 @@ int main(void)
             0.005f,
             20
         );
-        counterIncrement = GuiSliderPro(
+        timeIncrement = GuiSliderPro(
             (Rectangle){SCREEN_WIDTH - 250, SCREEN_HEIGHT - 140, 200, 50},
             "Speed",
             "",
-            counterIncrement,
-            0.05f,
-            0.2f,
+            timeIncrement,
+            0.1f,
+            1.0f,
             20
         );
 
