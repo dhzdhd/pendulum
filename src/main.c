@@ -1,8 +1,10 @@
+#include <stdio.h>
+
 #include "raylib.h"
 #include "raymath.h"
 #include "sim.h"
 #include "raygui.h"
-#include <stdio.h>
+
 
 int main(void)
 {

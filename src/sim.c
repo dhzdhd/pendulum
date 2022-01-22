@@ -1,7 +1,8 @@
+#include <math.h>
+
 #include "sim.h"
 #include "raylib.h"
-#include "raymath.h"
-#include <math.h>
+
 
 float getAngleFromPos(Vector2 pos)
 {
