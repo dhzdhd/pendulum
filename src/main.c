@@ -87,9 +87,12 @@ int main(void)
         else
         {
             // Physics
-//            rodInst.angle = amplitude * cos(sqrt(GRAVITY / rodInst.length) * time);
+
+            // Old simple formula
+            // rodInst.angle = amplitude * cos(sqrt(GRAVITY / rodInst.length) * time);
+
             float omega = GRAVITY / rodInst.length;
-            rodInst.angle = amplitude * expf(-damper * time / 2) * cos(sqrtf(powf(omega, 2) - (powf(damper, 2) / 4)) * time );
+            rodInst.angle = amplitude * expf(-damper * time / 2) * cos(sqrtf(powf(omega, 2) - (powf(damper, 2) / 4)) * time);
 
             rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
             rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
