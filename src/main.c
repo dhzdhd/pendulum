@@ -73,10 +73,13 @@ int main(void)
             // Move pendulum according to mouse movement
             if (IsMouseButtonDown(0))
             {
-                mousePos = GetMousePosition();
-                rodInst.angle = getAngleFromPos(mousePos);
-                rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
-                rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
+                if (GetMousePosition().x > 250 && GetMousePosition().y < (SCREEN_HEIGHT - 50))
+                {
+                    mousePos = GetMousePosition();
+                    rodInst.angle = getAngleFromPos(mousePos);
+                    rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
+                    rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
+                }
             }
             amplitude = rodInst.angle;
             time = 0.1f;
