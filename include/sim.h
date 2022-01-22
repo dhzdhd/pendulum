@@ -1,5 +1,7 @@
 #include "raylib.h"
 
+#define RAYGUI_IMPLEMENTATION
+
 #ifndef PENDULUM_SIM_H
 #define PENDULUM_SIM_H
 

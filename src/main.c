@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "sim.h"
+#include "raygui.h"
 #include <stdio.h>
 
 int main(void)
@@ -19,6 +20,7 @@ int main(void)
     Vector2 mousePos;
     float amplitude;
     float counter = 0.1f;
+    float counterIncrement = 0.1f;
     float damper = 0.0f;
 
     int pointNumber = 0;
@@ -78,7 +80,7 @@ int main(void)
 
             rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
             rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
-            counter += 0.05f;
+            counter += counterIncrement;
         }
 
         // Draw
@@ -108,10 +110,33 @@ int main(void)
                 }
             }
 
-            char buffer[100];
-            sprintf(buffer, "Particles: %d", pointNumber);
-            DrawText(buffer, SCREEN_WIDTH - 180, 0, 20, (Color) {218, 172, 209, 255});
+            char particleBuffer[100];
+            sprintf(particleBuffer, "Particles: %d", pointNumber);
+            DrawText(particleBuffer, SCREEN_WIDTH - 180, 0, 20, (Color) {218, 172, 209, 255});
+
+            char dampBuffer[100];
+            sprintf(dampBuffer, "Damping: %.4f", damper);
+            DrawText(dampBuffer, SCREEN_WIDTH - 180, 20, 20, (Color) {218, 172, 209, 255});
         }
+
+        damper = GuiSliderPro(
+            (Rectangle){SCREEN_WIDTH - 250, SCREEN_HEIGHT - 70, 200, 50},
+            "Damping",
+            "",
+            damper,
+            0,
+            0.005f,
+            20
+        );
+        counterIncrement = GuiSliderPro(
+                (Rectangle){SCREEN_WIDTH - 250, SCREEN_HEIGHT - 140, 200, 50},
+                "Speed",
+                "",
+                counterIncrement,
+                0.05f,
+                0.2f,
+                20
+        );
 
         EndDrawing();
     }
