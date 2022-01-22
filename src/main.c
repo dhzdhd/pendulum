@@ -17,6 +17,8 @@ int main(void)
 
     bool simulation = false;
     Vector2 mousePos;
+    float currentAngle;
+    float counter = 0.1;
 
     SetTargetFPS(60);
 
@@ -30,9 +32,11 @@ int main(void)
                 rodInst.end.y,
             },
             GREEN,
-            0.0f,
+            (Vector2) {0, 0},
             1.0f,
         };
+        bobInst.position.x += bobInst.velocity.x;
+        bobInst.position.y += bobInst.velocity.y;
 
         if (IsKeyPressed(KEY_SPACE))
         {
@@ -46,21 +50,20 @@ int main(void)
             {
                 mousePos = GetMousePosition();
                 rodInst.angle = getAngleFromPos(mousePos);
-                printf("%f\n", sin(rodInst.angle));
                 rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
                 rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
             }
+            currentAngle = rodInst.angle;
         }
 
         if (simulation)
         {
             // Physics
-            if (abs(rodInst.angle) != rodInst.angle)
-            {
-                float lengthFromBaseY = abs(rodInst.end.y - ZERO_HEIGHT);
-                float potentialE = bobInst.mass * GRAVITY * rodInst.length * sin(abs(rodInst.angle * DEG2RAD));
-                float kineticE = 0;
-            }
+            rodInst.angle = currentAngle * cos(sqrt(GRAVITY / rodInst.length) * counter);
+            printf("%f", rodInst.angle);
+            rodInst.end.x = ZERO_WIDTH + (sin(rodInst.angle) * rodInst.length);
+            rodInst.end.y = ZERO_HEIGHT + (cos(rodInst.angle) * rodInst.length);
+            counter += 0.1;
         }
 
         // Draw

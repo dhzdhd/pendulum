@@ -17,7 +17,7 @@ typedef struct Bob
     float radius;
     Vector2 position;
     Color color;
-    float velocity;
+    Vector2 velocity;
     float mass;
 } Bob;
 
