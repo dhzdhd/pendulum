@@ -1,3 +1,1 @@
-/include/raygui.h linguist-detectable=false
-/include/raylib.h linguist-detectable=false
-/include/raymath.h linguist-detectable=false
+*.h linguist-detectable=false
